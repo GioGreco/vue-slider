@@ -45,12 +45,19 @@ const app = createApp({
                 this.activeIndex = 0;
             }
             console.log(this.activeIndex);
+        },
+        slideshow(){
+            this.slideShow = setInterval(() => {
+                this.nextSlide();
+            }, 2000)
+        },
+        stopSlideshow(){
+            clearInterval(this.slideShow);
+            this.slideShow = null;
         }
     },
     mounted(){
-        const slider = setInterval(() => {
-            this.nextSlide();
-        }, 2000)
+        this.slideshow();
     }
 })
 
