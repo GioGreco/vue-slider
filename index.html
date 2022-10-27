@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Slider</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="./css/style.css" />
 </head>
 <body>
@@ -13,24 +13,38 @@
     <div id="app">
 
         <div class="container" >
-            <div class="slider-wrapper" tabindex="0" @mouseover="stopSlideshow" @mouseleave="slideshow">
+            <div class="slider-wrapper clearfix" tabindex="0" @mouseover="stopSlideshow" @mouseleave="slideshow">
 
-                <div class="item">
-                    <img :src="'./'+slides[activeIndex].image" :alt="slides[activeIndex].title + 'game cover'" />
-                    <div class="text">
-                        <h3>{{slides[activeIndex].title}}</h3>
-                        <p>
-                            {{slides[activeIndex].text}}
-                        </p>
+                    <div class="item">
+                        <!-- <transition name="fade">
+                            <img v-if="condition" :src="'./'+slides[activeIndex].image" :alt="slides[activeIndex].title + 'game cover'" />
+                        </transition> -->
+                        <!-- <img v-for="(slide, index) in slides" :key="slide.id" :src="slide.image" :alt="slide.title + 'game cover'" v-if="slide.id == activeIndex + 1"> -->
+                        <!-- <transition-group name="fade" tag="div">
+                            <div v-for="(slide, index) in slides" :key="slide.id" class="img-wrapper">
+                                <img :src="slide.image" :alt="slide.title + 'game cover'" v-if="slide.id == slides[activeIndex].id">
+                            </div>
+                        </transition-group> -->
+                        <div v-for="(slide,index) in slides" :key="slide.id" class="img-wrapper">
+                            <transition name="fade">
+                                <!-- <img :src="slide.image" :alt="slide.title+' game cover'" v-if="slide.id == slides[activeIndex].id"> -->
+                                <div v-if="slide.id == slides[activeIndex].id" class="img" :style="getBgImage"></div>
+                            </transition>
+                        </div>
+                        <div class="text">
+                            <h3>{{slides[activeIndex].title}}</h3>
+                            <p>
+                                {{slides[activeIndex].text}}
+                            </p>
+                        </div>
                     </div>
-                </div>
 
                 <div class="thumbs">
                     <div class="prev" @click="prevSlide"></div>
                     <div class="next" @click="nextSlide"></div>
-                    <div v-for="(slide,index) in slides" :key="index" class="thumb" :class="index === activeIndex ? 'active' : ''" @click="activeIndex = index">
-                        <img :src="'./'+slide.image" :alt="slide.title + 'game cover'"/>
-                    </div>
+                        <div v-for="(slide,index) in slides" :key="index" class="thumb" :class="index === activeIndex ? 'active' : ''" @click="activeIndex = index">
+                            <img :src="'./'+slide.image" :alt="slide.title + 'game cover'"/>
+                        </div>
                 </div>
 
             </div>
